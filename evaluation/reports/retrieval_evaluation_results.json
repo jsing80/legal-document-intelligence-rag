@@ -1,0 +1,30 @@
+{
+    "dense_results": {
+        "hit_rate": 0.6190476190476191,
+        "passage_recall": 0.5669841269841269,
+        "precision": 0.045714285714285714,
+        "evidence_recall": 0.5142669423158216,
+        "mrr": 0.24650977231362017
+    },
+    "bm25_results": {
+        "hit_rate": 0.6095238095238096,
+        "passage_recall": 0.5452380952380952,
+        "precision": 0.04285714285714286,
+        "evidence_recall": 0.5072052099118515,
+        "mrr": 0.19250642894052888
+    },
+    "fused_results": {
+        "hit_rate": 0.7523809523809524,
+        "passage_recall": 0.6923809523809524,
+        "precision": 0.03989732599170412,
+        "evidence_recall": 0.6342901210928313,
+        "mrr": 0.23387691286220946
+    },
+    "final_results": {
+        "hit_rate": 0.6190476190476191,
+        "passage_recall": 0.553968253968254,
+        "precision": 0.08380952380952382,
+        "evidence_recall": 0.49970133916375253,
+        "mrr": 0.3023204837490552
+    }
+}

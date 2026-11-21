@@ -1,0 +1,23 @@
+settings:
+  enabled: true
+  max_characters: 12000
+
+rules:
+
+  - id: empty_response
+    category: response_validation
+    description: Generated response must not be empty.
+    enabled: true
+    action: reject
+
+  - id: response_too_long
+    category: response_length
+    description: Generated response must remain within the configured character limit.
+    enabled: true
+    action: reject
+
+  - id: trim_whitespace
+    category: response_cleanup
+    description: Remove leading and trailing whitespace.
+    enabled: true
+    action: cleanup

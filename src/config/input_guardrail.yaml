@@ -1,0 +1,129 @@
+settings:
+  enabled: true
+  max_characters: 4000
+
+  normalization:
+    unicode_nfkc: true
+    remove_null_bytes: true
+    remove_zero_width_characters: true
+    collapse_whitespace: true
+
+rules:
+
+  # =================================================
+  # CATEGORY 1: PROMPT INJECTION
+  # =================================================
+
+  - id: injection_override_instructions
+    category: prompt_injection
+    description: Attempts to override previous or system instructions.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(ignore|disregard|override|forget)\b.{0,60}\b(previous|prior|above|all|system|developer)\b.{0,30}\b(instructions?|rules?|prompts?)\b'
+      - '(?i)\b(ignore|disregard)\s+(all\s+)?(previous|prior|above)\s+instructions?\b'
+
+  - id: injection_reveal_prompt
+    category: prompt_injection
+    description: Attempts to reveal hidden system or developer instructions.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(reveal|show|print|repeat|display|disclose)\b.{0,50}\b(system|developer|hidden)\s+(prompt|instructions?)\b'
+      - '(?i)\bwhat\s+are\s+your\s+(system|hidden)\s+instructions\b'
+
+  # =================================================
+  # CATEGORY 2: JAILBREAKING
+  # =================================================
+
+  - id: jailbreak_role_override
+    category: jailbreaking
+    description: Attempts to assign an unrestricted or privileged role.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(you are now|act as|pretend to be)\b.{0,60}\b(unrestricted|unfiltered|developer mode|DAN|admin)\b'
+      - '(?i)\b(enable|activate|enter)\s+(developer|jailbreak|unrestricted)\s+mode\b'
+
+  - id: jailbreak_safety_bypass
+    category: jailbreaking
+    description: Attempts to bypass safety restrictions.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(bypass|disable|circumvent|ignore)\b.{0,50}\b(safety|security|content)\s+(filters?|restrictions?|policies|guardrails?)\b'
+
+  # =================================================
+  # CATEGORY 3: HARMFUL INTENT
+  # These are narrow phrase-based checks, not a
+  # comprehensive harmful-content classifier.
+  # =================================================
+
+  - id: harmful_violence_instructions
+    category: harmful_intent
+    description: Detects explicit requests for instructions to physically harm someone.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(how\s+to|steps\s+to|instructions?\s+for)\b.{0,60}\b(kill|poison|murder|seriously injure)\b.{0,40}\b(someone|person|people|them)\b'
+
+  - id: harmful_self_harm_instructions
+    category: harmful_intent
+    description: Detects explicit requests for self-harm instructions.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(how\s+to|best\s+way\s+to|instructions?\s+for)\b.{0,60}\b(kill myself|commit suicide|self[- ]harm)\b'
+
+  # =================================================
+  # CATEGORY 4: SENSITIVE PERSONAL INFORMATION
+  # PII is redacted rather than automatically rejected.
+  # =================================================
+
+  - id: pii_email
+    category: pii
+    description: Detects and redacts email addresses.
+    enabled: true
+    action: redact
+    replacement: '[EMAIL REDACTED]'
+    patterns:
+      - '\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
+
+  - id: pii_phone
+    category: pii
+    description: Detects phone numbers when identified by a phone or contact label.
+    enabled: true
+    action: redact
+    replacement: '[PHONE REDACTED]'
+    patterns:
+      - '(?i)\b(phone|mobile|contact|telephone|tel)\s*[:#-]?\s*\+?\d[\d\s().-]{7,}\d\b'
+
+  - id: pii_pan
+    category: pii
+    description: Detects and redacts Indian PAN identifiers.
+    enabled: true
+    action: redact
+    replacement: '[PAN REDACTED]'
+    patterns:
+      - '\b[A-Z]{5}[0-9]{4}[A-Z]\b'
+
+  - id: pii_aadhaar
+    category: pii
+    description: Detects Aadhaar identifiers when explicitly labelled.
+    enabled: true
+    action: redact
+    replacement: '[AADHAAR REDACTED]'
+    patterns:
+      - '(?i)\b(aadhaar|uidai|uid)\s*[:#-]?\s*\d{4}\s?\d{4}\s?\d{4}\b'
+
+  # =================================================
+  # CATEGORY 5: SUSPICIOUS ENCODING / OBFUSCATION
+  # =================================================
+
+  - id: suspicious_instruction_encoding
+    category: obfuscation
+    description: Detects explicit requests to decode and execute encoded instructions.
+    enabled: true
+    action: reject
+    patterns:
+      - '(?i)\b(decode|execute|follow)\b.{0,60}\b(base64|encoded)\b.{0,60}\b(instructions?|prompt|commands?)\b'

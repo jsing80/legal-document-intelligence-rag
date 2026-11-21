@@ -1,0 +1,26 @@
+
+# API keys and secrets
+.env
+.env.*
+!.env.example
+*key*
+*secret*
+*.pem
+
+# Python virtual environments
+.venv/
+venv/
+
+# Generated artifacts
+git statuschunks/
+embeddings/
+vector_db/
+bm25_index/
+processed_documents/
+chunks/
+bm25_index/
+
+# Index and cache files
+*.index
+__pycache__/
+.pytest_cache/
