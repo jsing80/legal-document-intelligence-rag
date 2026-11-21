@@ -1,26 +1,42 @@
 
-# API keys and secrets
+# Environment and secrets
 .env
 .env.*
 !.env.example
-*key*
-*secret*
 *.pem
+*.key
+*secret*
 
 # Python virtual environments
 .venv/
 venv/
 
-# Generated artifacts
-git statuschunks/
-embeddings/
-vector_db/
-bm25_index/
-processed_documents/
-chunks/
-bm25_index/
-
-# Index and cache files
-*.index
+# Python cache and generated files
 __pycache__/
+*.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local generated document artifacts
+chunks/
+processed_documents/
+
+# Local retrieval indexes and vector databases
+bm25_index/
+vector_db/
+src/vector_db/
+
+# Generated evaluation reports
+evaluation/reports/
+
+# Local exploratory experiments
+src/retrieval/ret_test/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+src/evaluation/eval_test/
+src/retrieval/ret_test/
