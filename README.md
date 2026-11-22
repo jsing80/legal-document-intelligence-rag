@@ -1,4 +1,4 @@
-# Legal Document Intelligence — A Product Manager's Hands-on RAG Exploration
+# RAG Pipeline for sample Legal Data
 
 > A hands-on project to understand how a Retrieval-Augmented Generation (RAG) application is translated from a product problem into a working technical solution.
 
@@ -19,6 +19,10 @@ Through this exercise, I wanted to:
 - **Build production awareness:** identify the additional considerations needed to evolve a working prototype into a reliable, secure, scalable and cost-conscious product.
 
 This repository captures the working implementation and the learning journey. It is a sample learning and demonstration project, **not a production-ready legal advice system**.
+
+## Generic RAG System Design (HLD Production Grade):
+
+- [System Design](RAG_SYSTEMDESIGN_README.md) — detailed implemented architecture, component interactions, data flows, technical decisions and separately identified enterprise-level recommendations.
 
 ---
 
@@ -57,7 +61,6 @@ The intended capabilities are:
 | Validate user queries and generated responses | Input and output guardrails |
 | Measure the quality of the solution | Retrieval evaluation and RAGAS evaluation |
 
-These capabilities describe the scope being explored. The detailed product requirements, assumptions, acceptance criteria and success measures will be documented separately in [`docs/product-requirements.md`](docs/product-requirements.md).
 
 ## 3. Solution Overview
 
@@ -407,11 +410,6 @@ The current project focuses on the core RAG workflow and its evaluation. Further
 - More comprehensive security testing and evaluation.
 
 These are areas for future design and validation, not claims about capabilities already implemented.
-
-## 12. Product and System Design Documents
-
-- [Product Requirements](docs/product-requirements.md) — product problem, users, functional and non-functional requirements, scope and success measures.
-- [System Design](docs/system-design.md) — detailed implemented architecture, component interactions, data flows, technical decisions and separately identified enterprise-level recommendations.
 
 ---
 
